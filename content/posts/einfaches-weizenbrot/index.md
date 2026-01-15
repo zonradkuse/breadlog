@@ -5,6 +5,13 @@ title = 'Einfaches Weizenbrot'
 toc  = true
 +++
 
+{{< figure
+  src="./2-abends/4.jpg"
+  caption="Das fertige Brot"
+  align="center"
+>}}
+
+
 ## Das Rezept
 
 | Zutat | Menge |
@@ -54,6 +61,10 @@ Jetzt darf der Teig ruhen bis es ins Bett geht. Dafür mit einem feuchten Handtu
 >}}
 
 Vor dem wohlverdienten Schlaf dehnen und falten wir den Teig einmal damit dieser mehr Spannung aufbauen kann und glatt wird. Danach sollte die Teigoberfläche nicht mehr klebrig sein. Auf Youtube finden sich diverse Anleitungen. Alle funktionieren. Spannung baut man am besten auf indem man den Teig auf der Arbeitsplatte dehnt, nochmal faltet und dann zu einer Kugel über die Arbeitsplatte zieht.
+
+{{< youtube id=wHL44ONu3so start=1650 >}}
+
+Am Ende sollte der Teig etwa so aussehen.
 
 {{< figure
   src="./1-abends/5.jpg"
