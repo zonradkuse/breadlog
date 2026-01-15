@@ -1,0 +1,80 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" | default "" -}}
+{{- $caption := .Get "caption" | default (.Get "title") -}}
+
+{{/* normalize path */}}
+{{- $clean := strings.TrimPrefix "/" $src -}}
+{{- $clean = strings.TrimPrefix "./" $clean -}}
+{{- $pattern := printf "**/%s" $clean -}}
+
+{{- $img := .Page.Resources.GetMatch $pattern -}}
+
+{{- if and $img (ne $img.MediaType.SubType "svg") }}
+
+  {{/* responsive widths */}}
+  {{- $widths := slice 480 768 1024 1600 -}}
+
+  {{/* AVIF */}}
+  {{- $avif := slice -}}
+  {{- range $widths }}
+    {{- if ge $img.Width . }}
+      {{- $avif = $avif | append ($img.Fit (printf "%dx%d q50 avif" . .)) -}}
+    {{- end }}
+  {{- end }}
+
+  {{/* WebP */}}
+  {{- $webp := slice -}}
+  {{- range $widths }}
+    {{- if ge $img.Width . }}
+      {{- $webp = $webp | append ($img.Fit (printf "%dx%d q75 webp" . .)) -}}
+    {{- end }}
+  {{- end }}
+
+  {{/* fallback image */}}
+  {{- $fallback := $img.Fit "1600x1600 q80" -}}
+
+  <figure>
+    <picture>
+
+      {{- if gt (len $avif) 0 }}
+        <source
+          type="image/avif"
+          srcset="{{- range $i, $r := $avif -}}{{ if $i }}, {{ end }}{{ $r.RelPermalink }} {{ $r.Width }}w{{- end -}}"
+          sizes="(max-width: 768px) 100vw, 768px"
+        >
+      {{- end }}
+
+      {{- if gt (len $webp) 0 }}
+        <source
+          type="image/webp"
+          srcset="{{- range $i, $r := $webp -}}{{ if $i }}, {{ end }}{{ $r.RelPermalink }} {{ $r.Width }}w{{- end -}}"
+          sizes="(max-width: 768px) 100vw, 768px"
+        >
+      {{- end }}
+
+      <img
+        src="{{ $fallback.RelPermalink }}"
+        width="{{ $fallback.Width }}"
+        height="{{ $fallback.Height }}"
+        alt="{{ $alt }}"
+        loading="lazy"
+        decoding="async"
+      >
+    </picture>
+
+    {{- if $caption }}
+      <figcaption>{{ $caption }}</figcaption>
+    {{- end }}
+  </figure>
+
+{{- else }}
+
+  {{/* fallback for missing / external / svg */}}
+  <figure>
+    <img src="{{ $src }}" alt="{{ $alt }}" loading="lazy">
+    {{- if $caption }}
+      <figcaption>{{ $caption }}</figcaption>
+    {{- end }}
+  </figure>
+
+{{- end }}
