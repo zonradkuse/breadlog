@@ -1,4 +1,10 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+baseURL = 'https://breadlog.zonradkuse.eu'
+languageCode = 'de-DE'
+title = 'Breadlog'
 theme = 'archie'
+tableOfContents = true
+
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 6
+ordered = false
